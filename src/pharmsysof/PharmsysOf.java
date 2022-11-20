@@ -4,6 +4,9 @@
  */
 package pharmsysof;
 
+import formulario.FrmCliente;
+import formulario.FrmInicioSesion;
+
 /**
  *
  * @author HP
@@ -15,6 +18,8 @@ public class PharmsysOf {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        FrmInicioSesion frm = new FrmInicioSesion();
+        frm.setVisible(true);
     }
     
 }

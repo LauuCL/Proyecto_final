@@ -11,14 +11,18 @@ public class Cliente {
 	private String nombreCliente;
 	private String apellidoCliente;
 	private String direccionCliente;
+        private String codigoMunicipio;
 	private int telefonoCliente;
 	private String emailCliente;
 
-    public Cliente(int idCliente, String nombreCliente, String apellidoCliente, String direccionCliente, int telefonoCliente, String emailCliente) {
+    public Cliente(int idCliente, String nombreCliente, String apellidoCliente, String direccionCliente, 
+            String codigoMunicipio, int telefonoCliente, String emailCliente) {
+        
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.apellidoCliente = apellidoCliente;
         this.direccionCliente = direccionCliente;
+        this.codigoMunicipio = codigoMunicipio;
         this.telefonoCliente = telefonoCliente;
         this.emailCliente = emailCliente;
     }
@@ -58,7 +62,16 @@ public class Cliente {
     public void setDireccionCliente(String direccionCliente) {
         this.direccionCliente = direccionCliente;
     }
+    
+      public String getCodigoMunicipio() {
+        return codigoMunicipio;
+    }
 
+    public void setCodigoMunicipio(String codigoMunicipio) {
+        this.codigoMunicipio = codigoMunicipio;
+    }
+    
+    
     public int getTelefonoCliente() {
         return telefonoCliente;
     }
@@ -74,11 +87,12 @@ public class Cliente {
     public void setEmailCliente(String emailCliente) {
         this.emailCliente = emailCliente;
     }
+    
 
     @Override
     public String toString() {
         return idCliente + " "+ nombreCliente + " " +  apellidoCliente + " " + direccionCliente + " "
-                + telefonoCliente + " " + emailCliente;
+                + codigoMunicipio+ " " + telefonoCliente + " " + emailCliente;
     }
         
         
