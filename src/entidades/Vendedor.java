@@ -11,6 +11,7 @@ public class Vendedor {
 	private String nombreVend;
 	private String apellidoVend;
 	private String direccionVend;
+        private String codigoMunicipio;
 	private int telefonoVend;
 	private String turnoVend;
 	
@@ -19,11 +20,13 @@ public class Vendedor {
 
 	}
 
-    public Vendedor(int idVend, String nombreVend, String apellidoVend, String direccionVend, int telefonoVend, String turnoVend) {
+    public Vendedor(int idVend, String nombreVend, String apellidoVend, String direccionVend, 
+            String codigoMunicipio, int telefonoVend, String turnoVend) {
         this.idVend = idVend;
         this.nombreVend = nombreVend;
         this.apellidoVend = apellidoVend;
         this.direccionVend = direccionVend;
+        this.codigoMunicipio = codigoMunicipio;
         this.telefonoVend = telefonoVend;
         this.turnoVend = turnoVend;
     }
@@ -60,6 +63,14 @@ public class Vendedor {
         this.direccionVend = direccionVend;
     }
 
+    public String getCodigoMunicipio() {
+        return codigoMunicipio;
+    }
+
+    public void setCodigoMunicipio(String codigoMunicipio) {
+        this.codigoMunicipio = codigoMunicipio;
+    }
+
     public int getTelefonoVend() {
         return telefonoVend;
     }
@@ -78,7 +89,8 @@ public class Vendedor {
 
     @Override
     public String toString() {
-        return idVend + " " + nombreVend + " " + apellidoVend + " " + direccionVend + " " + telefonoVend + " " + turnoVend;
+        return idVend + " " + nombreVend + " " + apellidoVend + " " + direccionVend + " " +
+                codigoMunicipio + " " + telefonoVend + " " + turnoVend;
     }
 	
 }//end Vendedor

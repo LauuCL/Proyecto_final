@@ -2,7 +2,9 @@ package formulario;
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import datos.DCliente;
+import datos.DVendedor;
 import entidades.Cliente;
+import entidades.Vendedor;
 import java.sql.*;
 import java.awt.HeadlessException;
 import java.awt.event.KeyAdapter;
@@ -17,17 +19,17 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-public class FrmCliente extends javax.swing.JFrame {
+public class FrmVendedor extends javax.swing.JFrame {
 
      private int id;
-    private DCliente dcliente = new DCliente();
-    private ArrayList<Cliente> lista = new ArrayList<>();
+    private DVendedor dvendedor = new DVendedor();
+    private ArrayList<Vendedor> lista = new ArrayList<>();
     
     //Declaramos un filtro de datos para la tabla
     TableRowSorter trsFiltro;
     
     
-    public FrmCliente() {
+    public FrmVendedor() {
         initComponents();
         setLocationRelativeTo(null);
         this.llenarTabla();
@@ -39,7 +41,7 @@ public class FrmCliente extends javax.swing.JFrame {
         TfDireccion.setText("");
         TfMunicipio.setText("");
         TfTelefono.setText("");
-        TfCorreo.setText("");
+        TfTurno.setText("");
         BtnGuardar.setEnabled(true);
         BtnEditar.setEnabled(false);
         BtnEliminar.setEnabled(false);
@@ -49,7 +51,7 @@ public class FrmCliente extends javax.swing.JFrame {
         if(!lista.isEmpty()){
             lista.clear();
         }
-        lista=dcliente.listarCliente();
+        lista=dvendedor.listarVendedor();
     }
     
     private void llenarTabla(){
@@ -61,16 +63,16 @@ public class FrmCliente extends javax.swing.JFrame {
             }
         };
         
-        String titulos[] = {"Nombres", "Apellidos", "Dirección", "Teléfono", "Correo eléctronico"};
+        String titulos[] = {"Nombres", "Apellidos", "Dirección", "Teléfono", "Turno"};
         dtm.setColumnIdentifiers(titulos);
-        for(Cliente c : lista){
+        for(Vendedor v : lista){
             Object[] fila = new Object[]{
-                c.getNombreCliente(),
-                c.getApellidoCliente(),
-                c.getDireccionCliente(),
-                c.getCodigoMunicipio(),
-                c.getTelefonoCliente(),
-                c.getEmailCliente()
+                v.getNombreVend(),
+                v.getApellidoVend(),
+                v.getDireccionVend(),
+                v.getCodigoMunicipio(),
+                v.getTelefonoVend(),
+                v.getTurnoVend()
             };
             dtm.addRow(fila);
         }
@@ -84,13 +86,13 @@ public class FrmCliente extends javax.swing.JFrame {
     
     private void ubicarDatos(){
         int fila = TblRegistros.getSelectedRow();
-        id = lista.get(fila).getIdCliente();
-        TfNombres.setText(lista.get(fila).getNombreCliente());
-        TfApellidos.setText(lista.get(fila).getApellidoCliente());
-        TfDireccion.setText(lista.get(fila).getDireccionCliente());
+        id = lista.get(fila).getIdVend();
+        TfNombres.setText(lista.get(fila).getNombreVend());
+        TfApellidos.setText(lista.get(fila).getApellidoVend());
+        TfDireccion.setText(lista.get(fila).getDireccionVend());
         TfMunicipio.setText(lista.get(fila).getCodigoMunicipio());
-        TfTelefono.setText(Integer.toString(lista.get(fila).getTelefonoCliente()));
-        TfCorreo.setText(lista.get(fila).getEmailCliente());
+        TfTelefono.setText(Integer.toString(lista.get(fila).getTelefonoVend()));
+        TfTurno.setText(lista.get(fila).getTurnoVend());
         TbPanel.setSelectedIndex(0);
         BtnGuardar.setEnabled(false);
         BtnEditar.setEnabled(true);
@@ -101,38 +103,38 @@ public class FrmCliente extends javax.swing.JFrame {
     private void verificarDatosVacios(){
         if(TfNombres.getText().equals("") || TfNombres.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que los nombres"
-                 + "no esten vacios", "Cliente", JOptionPane.WARNING_MESSAGE);
+                 + "no esten vacios", "Vendedor", JOptionPane.WARNING_MESSAGE);
          TfNombres.requestFocus();
         }
         
         if(TfApellidos.getText().equals("") || TfApellidos.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que los apellidos"
-                 + "no esten vacios", "Cliente", JOptionPane.WARNING_MESSAGE);
+                 + "no esten vacios", "Vendedor", JOptionPane.WARNING_MESSAGE);
          TfApellidos.requestFocus();
         }
         
         if(TfDireccion.getText().equals("") || TfDireccion.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que la dirección"
-                 + "no esté vacío", "Cliente", JOptionPane.WARNING_MESSAGE);
+                 + "no esté vacío", "Vendedor", JOptionPane.WARNING_MESSAGE);
          TfDireccion.requestFocus();
         }
         
         if(TfMunicipio.getText().equals("") || TfMunicipio.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que el código"
-                 + "del municipio no esté vacío", "Cliente", JOptionPane.WARNING_MESSAGE);
+                 + "del municipio no esté vacío", "Vendedor", JOptionPane.WARNING_MESSAGE);
          TfMunicipio.requestFocus();
         }
         
         if(TfTelefono.getText().equals("") || TfTelefono.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que el teléfono"
-                 + "no esté vaío", "Cliente", JOptionPane.WARNING_MESSAGE);
+                 + "no esté vaío", "Vendedor", JOptionPane.WARNING_MESSAGE);
          TfTelefono.requestFocus();
         }
         
-        if(TfCorreo.getText().equals("") || TfCorreo.getText().length() == 0){
-         JOptionPane.showMessageDialog(this, "Por favor verifique que el correo"
-                 + "no esté vacío", "Cliente", JOptionPane.WARNING_MESSAGE);
-         TfCorreo.requestFocus();
+        if(TfTurno.getText().equals("") || TfTurno.getText().length() == 0){
+         JOptionPane.showMessageDialog(this, "Por favor verifique que el turno"
+                 + "no esté vacío", "Vendedor", JOptionPane.WARNING_MESSAGE);
+         TfTurno.requestFocus();
         }
         
     }
@@ -159,7 +161,7 @@ public class FrmCliente extends javax.swing.JFrame {
         BtnEditar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
         BtnSalir = new javax.swing.JButton();
-        TfCorreo = new javax.swing.JTextField();
+        TfTurno = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         TfMunicipio = new javax.swing.JTextField();
         Registros = new javax.swing.JPanel();
@@ -184,7 +186,7 @@ public class FrmCliente extends javax.swing.JFrame {
 
         jLabel4.setText("Teléfono:");
 
-        jLabel5.setText("Correo:");
+        jLabel5.setText("Turno:");
 
         TbComandos.setRollover(true);
 
@@ -269,7 +271,7 @@ public class FrmCliente extends javax.swing.JFrame {
                     .addComponent(TfApellidos)
                     .addComponent(TfDireccion)
                     .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TfCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
+                    .addComponent(TfTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(36, 36, 36))
@@ -305,7 +307,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(TfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TfTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
 
@@ -401,16 +403,16 @@ public class FrmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
          this.verificarDatosVacios();
         try{
-            Cliente c = new Cliente(0, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
-                    TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfCorreo.getText());
-            if(dcliente.guardarCliente(c)){
+            Vendedor v = new Vendedor(0, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
+                    TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfTurno.getText());
+            if(dvendedor.guardarVendedor(v)){
                 JOptionPane.showMessageDialog(this, "Registro guardado",
-                        "Cliente", JOptionPane.INFORMATION_MESSAGE);
+                        "Vendedor", JOptionPane.INFORMATION_MESSAGE);
                 llenarTabla();
                 TbPanel.setSelectedIndex(1);
             }else{
               JOptionPane.showMessageDialog(this, "Error al guardar",
-                        "Cliente", JOptionPane.WARNING_MESSAGE);  
+                        "Vendedor", JOptionPane.WARNING_MESSAGE);  
             }
         }catch(HeadlessException ex){
             System.out.println("Error al intentar guardar: " + ex.getMessage());
@@ -420,16 +422,16 @@ public class FrmCliente extends javax.swing.JFrame {
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();
-         Cliente c = new Cliente(id, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
-                   TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfCorreo.getText());
-          if(dcliente.editarCliente(c)){
+         Vendedor v = new Vendedor(id, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
+                   TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfTurno.getText());
+          if(dvendedor.editarVendedor(v)){
                 JOptionPane.showMessageDialog(this, "Registro Editado",
-                        "Cliente", JOptionPane.INFORMATION_MESSAGE);
+                        "Vendedor", JOptionPane.INFORMATION_MESSAGE);
                 llenarTabla();
                 TbPanel.setSelectedIndex(1);
             }else{
               JOptionPane.showMessageDialog(this, "Error al editar",
-                        "Cliente", JOptionPane.WARNING_MESSAGE);  
+                        "Vendedor", JOptionPane.WARNING_MESSAGE);  
             }
     }//GEN-LAST:event_BtnEditarActionPerformed
 
@@ -437,14 +439,14 @@ public class FrmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.verificarDatosVacios();
         int resp = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este registro?",
-                "Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Vendedor", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(resp==0){
-            if(dcliente.eliminarCliente(id)){
+            if(dvendedor.eliminarVendedor(id)){
             JOptionPane.showMessageDialog(this, "Registro eliminado satisfactoriamente",
-                        "Cliente", JOptionPane.INFORMATION_MESSAGE);
+                        "Vendedor", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(this, "Error al eliminar",
-                        "Cliente", JOptionPane.WARNING_MESSAGE);
+                        "Vendedor", JOptionPane.WARNING_MESSAGE);
             }
          }
         llenarTabla();
@@ -472,13 +474,13 @@ public class FrmCliente extends javax.swing.JFrame {
             //</editor-fold>
             UIManager.setLookAndFeel(new McWinLookAndFeel());
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmVendedor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCliente().setVisible(true);
+                new FrmVendedor().setVisible(true);
             }
         });
     }
@@ -496,11 +498,11 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JTabbedPane TbPanel;
     private javax.swing.JTable TblRegistros;
     private javax.swing.JTextField TfApellidos;
-    private javax.swing.JTextField TfCorreo;
     private javax.swing.JTextField TfDireccion;
     private javax.swing.JTextField TfMunicipio;
     private javax.swing.JTextField TfNombres;
     private javax.swing.JTextField TfTelefono;
+    private javax.swing.JTextField TfTurno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

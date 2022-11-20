@@ -229,10 +229,10 @@ public class FrmIntermedia extends javax.swing.JFrame {
 
     private void EmpleadosRegistrosEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpleadosRegistrosEActionPerformed
 
-       /* Vendedor vendedor = new Vendedor();
+       FrmVendedor vendedor = new FrmVendedor();
         vendedor.setVisible(true);
         this.setVisible(false); 
-        EmpleadosRegistrosE.setEnabled(false);*/
+        EmpleadosRegistrosE.setEnabled(false);
 
     }//GEN-LAST:event_EmpleadosRegistrosEActionPerformed
 
@@ -259,9 +259,9 @@ public class FrmIntermedia extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        JOptionPane.showMessageDialog(null, "PHARMSYS es un sistema o programa que permite a la Farmacia FARMAPLUS desarrollarse en diferentes\n "
+        JOptionPane.showMessageDialog(null, "PHARMSYS es un sistema o programa que permite a la Farmacia Altagracua desarrollarse en diferentes\n "
                 + "actividades. En el sector administativo, llevar control de los productos disponibles en la Farmacia y las actividades\n  "
-                + "realizadas por los trabajadores. En el sector de compra y venta, permite llevar un registro de las ventas y agiliza el desarrollo\n "
+                + "realizadas por los trabajadores. En el sector de venta, permite llevar un registro de las ventas y agiliza el desarrollo\n "
                 + "de esta actividad para que el cliente reciba una mejor atención\n"
         );
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -286,10 +286,10 @@ public class FrmIntermedia extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void RegistroProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroProveedorActionPerformed
-        /*Proveedor provee = new Proveedor();
+        FrmProveedor provee = new FrmProveedor();
         provee.setVisible(true);
         this.setVisible(false);
-        RegistroProveedor.setEnabled(false);*/
+        RegistroProveedor.setEnabled(false);
     }//GEN-LAST:event_RegistroProveedorActionPerformed
 
     /**
