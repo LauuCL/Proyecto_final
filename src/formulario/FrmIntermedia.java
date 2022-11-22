@@ -245,10 +245,10 @@ public class FrmIntermedia extends javax.swing.JFrame {
 
     private void AlmacenRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlmacenRegistroActionPerformed
 
-        /*Ventas_r.Productos optener = new Ventas_r.Productos();
-        optener.setVisible(true);
+        FrmProducto prod = new FrmProducto();
+        prod.setVisible(true);
         this.setVisible(false); 
-        AlmacenRegistro.setEnabled(false);*/
+        AlmacenRegistro.setEnabled(false);
 
     }//GEN-LAST:event_AlmacenRegistroActionPerformed
 

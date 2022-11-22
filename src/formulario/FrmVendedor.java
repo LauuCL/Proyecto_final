@@ -175,7 +175,7 @@ public class FrmVendedor extends javax.swing.JFrame {
         jLabel6.setText("Código cliente:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("CLIENTE");
+        setTitle("VENDEDOR");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Nombres: ");

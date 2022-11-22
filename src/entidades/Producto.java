@@ -9,19 +9,24 @@ public class Producto {
 
 	private int idProd;
 	private String nombreProd;
+        private String codigoProv;
 	private double precioProd;
 	private int existenciaProd;
+        private String categoria;
 	private String fechaVencimiento;
 
 	public Producto(){
 
 	}
 
-    public Producto(int idProd, String nombreProd, double precioProd, int existenciaProd, String fechaVencimiento) {
+    public Producto(int idProd, String nombreProd, String codigoProv,  double precioProd, int existenciaProd,
+            String categoria, String fechaVencimiento) {
         this.idProd = idProd;
         this.nombreProd = nombreProd;
+        this.codigoProv = codigoProv;
         this.precioProd = precioProd;
         this.existenciaProd = existenciaProd;
+        this.categoria = categoria;
         this.fechaVencimiento = fechaVencimiento;
     }
 
@@ -45,6 +50,14 @@ public class Producto {
         this.nombreProd = nombreProd;
     }
 
+    public String getCodigoProv() {
+        return codigoProv;
+    }
+
+    public void setCodigoProv(String codigoProv) {
+        this.codigoProv = codigoProv;
+    }
+
     public double getPrecioProd() {
         return precioProd;
     }
@@ -61,6 +74,14 @@ public class Producto {
         this.existenciaProd = existenciaProd;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public String getFechaVencimiento() {
         return fechaVencimiento;
     }
@@ -71,7 +92,8 @@ public class Producto {
 
     @Override
     public String toString() {
-        return  idProd + " " + nombreProd + " =" + precioProd + " " + existenciaProd + " " + fechaVencimiento;
+        return  idProd + " " + nombreProd + " " + codigoProv + " " + precioProd + " " + existenciaProd + " " +
+                categoria + " " + fechaVencimiento;
     }
         
         

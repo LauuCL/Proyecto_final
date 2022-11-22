@@ -1,8 +1,9 @@
 package formulario;
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-import datos.DProveedor;
-import entidades.Proveedor;
+import datos.Conexion;
+import datos.DProducto;
+import entidades.Producto;
 import java.sql.*;
 import java.awt.HeadlessException;
 import java.awt.event.KeyAdapter;
@@ -17,116 +18,141 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-public class FrmProveedor extends javax.swing.JFrame {
+public class FrmProducto extends javax.swing.JFrame {
 
-    private String id;
-    private DProveedor dproveedor = new DProveedor();
-    private ArrayList<Proveedor> lista = new ArrayList<>();
-    
+    private int id;
+    private DProducto dproducto = new DProducto();
+    private ArrayList<Producto> lista = new ArrayList<>();
+
     //Declaramos un filtro de datos para la tabla
     TableRowSorter trsFiltro;
-    
-    
-    public FrmProveedor() {
+
+    public FrmProducto() {
         initComponents();
         setLocationRelativeTo(null);
         this.llenarTabla();
     }
-    
-    private void limpiar(){
-        TfCodigo.setText(" ");
+
+    private void limpiar() {
         TfNombre.setText("");
-        TfDireccion.setText("");
-        TfMunicipio.setText("");
-        TfTelefono.setText("");
+        TfExistencia.setText("");
+        TfFechaVenc.setText("");
+        TfPrecio.setText("");
+        CmbProveedor.setSelectedIndex(0);
         BtnGuardar.setEnabled(true);
         BtnEditar.setEnabled(false);
         BtnEliminar.setEnabled(false);
     }
-    
-    private void llenarArrayList(){
-        if(!lista.isEmpty()){
+
+    private void llenarArrayList() {
+        if (!lista.isEmpty()) {
             lista.clear();
         }
-        lista=dproveedor.listarProveedor();
+        lista = dproducto.listarProducto();
     }
-    
-    private void llenarTabla(){
+
+    private void llenarTabla() {
         llenarArrayList();
-        DefaultTableModel dtm = new DefaultTableModel(){
+        DefaultTableModel dtm = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        
-        String titulos[] = {"Código", "Nombre", "Dirección", "Teléfono"};
+
+        String titulos[] = {"Nombres", "Proveedor", "Existencia", "Fecha Vencimiento", "Precio", "Categoría"};
         dtm.setColumnIdentifiers(titulos);
-        for(Proveedor p : lista){
+        for (Producto p : lista) {
             Object[] fila = new Object[]{
-                p.getIdProv(),
-                p.getNombreProv(),
-                p.getDireccionProv(),
-                p.getCodigoMunicipio(),
-                p.getTelefonoProv(),
+                p.getNombreProd(),
+                p.getCodigoProv(),
+                p.getExistenciaProd(),
+                p.getFechaVencimiento(),
+                p.getPrecioProd(),
+                p.getCategoria()
             };
             dtm.addRow(fila);
         }
-        
+
         this.TblRegistros.setModel(dtm);
     }
-    
-    private void filtrarTabla(){
+
+    private void filtrarTabla() {
         trsFiltro.setRowFilter(RowFilter.regexFilter(TbDato.getText()));
     }
-    
-    private void ubicarDatos(){
+
+    private void LlenaCombo() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = Conexion.obtConexion();
+            String tSQL = "Select codigo_proveedor from Proveedor";
+            ps = conn.prepareStatement(tSQL,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE,
+                    ResultSet.HOLD_CURSORS_OVER_COMMIT);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CmbProveedor.addItem(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener registros:" + ex.getMessage());
+        }
+    }
+
+    private void ubicarDatos() {
         int fila = TblRegistros.getSelectedRow();
-        id = lista.get(fila).getIdProv();
-        TfNombre.setText(lista.get(fila).getNombreProv());
-        TfDireccion.setText(lista.get(fila).getDireccionProv());
-        TfMunicipio.setText(lista.get(fila).getCodigoMunicipio());
-        TfTelefono.setText(Integer.toString(lista.get(fila).getTelefonoProv()));
+        id = lista.get(fila).getIdProd();
+        TfNombre.setText(lista.get(fila).getNombreProd());
+        CmbProveedor.setSelectedItem(lista.get(fila).getCodigoProv());
+        TfExistencia.setText(Integer.toString(lista.get(fila).getExistenciaProd()));
+        TfFechaVenc.setText(lista.get(fila).getFechaVencimiento());
+        TfPrecio.setText(Double.toString(lista.get(fila).getPrecioProd()));
+        TfCategoria.setText(lista.get(fila).getCodigoProv());
         TbPanel.setSelectedIndex(0);
         BtnGuardar.setEnabled(false);
         BtnEditar.setEnabled(true);
         BtnEliminar.setEnabled(true);
         TfNombre.requestFocus();
     }
-    
-    private void verificarDatosVacios(){
-        
-         if(TfCodigo.getText().equals("") || TfCodigo.getText().length() == 0){
-         JOptionPane.showMessageDialog(this, "Por favor verifique que el código"
-                 + "no esté vacio", "Proveedor", JOptionPane.WARNING_MESSAGE);
-         TfNombre.requestFocus();
+
+    private void verificarDatosVacios() {
+        if (TfNombre.getText().equals("") || TfNombre.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor verifique que el nombre"
+                    + "no esten vacios", "Producto", JOptionPane.WARNING_MESSAGE);
+            TfNombre.requestFocus();
         }
-         
-         
-        if(TfNombre.getText().equals("") || TfNombre.getText().length() == 0){
-         JOptionPane.showMessageDialog(this, "Por favor verifique que el nombre"
-                 + "no esten vacios", "Proveedor", JOptionPane.WARNING_MESSAGE);
-         TfNombre.requestFocus();
+
+        if (TfExistencia.getText().equals("") || TfExistencia.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor verifique que la existencia"
+                    + "no esté vacía", "Producto", JOptionPane.WARNING_MESSAGE);
+            TfExistencia.requestFocus();
         }
-        
-        if(TfDireccion.getText().equals("") || TfDireccion.getText().length() == 0){
-         JOptionPane.showMessageDialog(this, "Por favor verifique que la dirección"
-                 + "no esté vacío", "Proveedor", JOptionPane.WARNING_MESSAGE);
-         TfDireccion.requestFocus();
+
+        if (TfFechaVenc.getText().equals("") || TfFechaVenc.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor verifique que la fecha de vencimiento"
+                    + " no esté vacío", "Producto", JOptionPane.WARNING_MESSAGE);
+            TfFechaVenc.requestFocus();
         }
-        
-        if(TfMunicipio.getText().equals("") || TfMunicipio.getText().length() == 0){
-         JOptionPane.showMessageDialog(this, "Por favor verifique que el código"
-                 + "del municipio no esté vacío", "Proveedor", JOptionPane.WARNING_MESSAGE);
-         TfMunicipio.requestFocus();
+
+        if (TfPrecio.getText().equals("") || TfPrecio.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor verifique que el precio"
+                    + "no esté vacío", "Producto", JOptionPane.WARNING_MESSAGE);
+            TfPrecio.requestFocus();
         }
-        
-        if(TfTelefono.getText().equals("") || TfTelefono.getText().length() == 0){
-         JOptionPane.showMessageDialog(this, "Por favor verifique que el teléfono"
-                 + "no esté vaío", "Proveedor", JOptionPane.WARNING_MESSAGE);
-         TfTelefono.requestFocus();
+
+        if (TfCategoria.getText().equals("") || TfCategoria.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor verifique que la categoría"
+                    + "no esté vacía", "Producto", JOptionPane.WARNING_MESSAGE);
+            TfPrecio.requestFocus();
         }
-        
+
+        if (CmbProveedor.getSelectedItem().equals(0)) {
+            JOptionPane.showMessageDialog(this, "Por favor verifique que haya seleccionado"
+                    + "un proveedor", "Producto", JOptionPane.WARNING_MESSAGE);
+            CmbProveedor.requestFocus();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -139,8 +165,8 @@ public class FrmProveedor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        TfTelefono = new javax.swing.JTextField();
-        TfDireccion = new javax.swing.JTextField();
+        TfPrecio = new javax.swing.JTextField();
+        TfExistencia = new javax.swing.JTextField();
         TfNombre = new javax.swing.JTextField();
         TbComandos = new javax.swing.JToolBar();
         BtnNuevo = new javax.swing.JButton();
@@ -149,9 +175,11 @@ public class FrmProveedor extends javax.swing.JFrame {
         BtnEliminar = new javax.swing.JButton();
         BtnSalir = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        TfMunicipio = new javax.swing.JTextField();
+        TfFechaVenc = new javax.swing.JTextField();
+        CmbProveedor = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        TfCodigo = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        TfCategoria = new javax.swing.JTextField();
         Registros = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         TbDato = new javax.swing.JTextField();
@@ -168,9 +196,9 @@ public class FrmProveedor extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre: ");
 
-        jLabel3.setText("Dirección:");
+        jLabel3.setText("Existencia:");
 
-        jLabel4.setText("Teléfono:");
+        jLabel4.setText("Precio:");
 
         TbComandos.setRollover(true);
 
@@ -229,63 +257,78 @@ public class FrmProveedor extends javax.swing.JFrame {
         });
         TbComandos.add(BtnSalir);
 
-        jLabel8.setText("Código Municipio:");
+        jLabel8.setText("Fecha de Vencimiento:");
 
-        jLabel2.setText("Código del proveedor:");
+        jLabel2.setText("Proveedor:");
+
+        jLabel5.setText("Categoría:");
 
         javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
         Datos.setLayout(DatosLayout);
         DatosLayout.setHorizontalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DatosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TbComandos, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+            .addGroup(DatosLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGap(50, 50, 50)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DatosLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(TbComandos, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(TfPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .addComponent(TfFechaVenc, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(56, 56, 56)))
+                        .addContainerGap())
                     .addGroup(DatosLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel3)))
-                        .addGap(42, 42, 42)
-                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TfDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(TfCodigo)
-                            .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(101, Short.MAX_VALUE))
+                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(TfCategoria, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TfExistencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                            .addComponent(TfNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         DatosLayout.setVerticalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DatosLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(TbComandos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(TfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                .addGap(31, 31, 31)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(TfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(34, 34, 34)
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(TfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                    .addComponent(TfExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(TfCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                    .addComponent(TfFechaVenc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(112, Short.MAX_VALUE))
+                    .addComponent(TfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         TbPanel.addTab("Datos", Datos);
@@ -347,17 +390,17 @@ public class FrmProveedor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void BtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoActionPerformed
         // TODO add your handling code here:
-         limpiar();
+        limpiar();
         TbPanel.setSelectedIndex(0);
     }//GEN-LAST:event_BtnNuevoActionPerformed
 
     private void TbDatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TbDatoKeyTyped
         // TODO add your handling code here:
-        TbDato.addKeyListener(new KeyAdapter(){
-            public void keyReleased(final KeyEvent e){
+        TbDato.addKeyListener(new KeyAdapter() {
+            public void keyReleased(final KeyEvent e) {
                 filtrarTabla();
             }
         });
@@ -368,30 +411,32 @@ public class FrmProveedor extends javax.swing.JFrame {
     private void TblRegistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblRegistrosMouseClicked
         // TODO add your handling code here:
         TblRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent e){
-            if(e.getClickCount() ==2){
-                ubicarDatos();
-            }  
-        }
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    ubicarDatos();
+                }
+            }
         });
     }//GEN-LAST:event_TblRegistrosMouseClicked
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
         // TODO add your handling code here:
-         this.verificarDatosVacios();
-        try{
-            Proveedor p = new Proveedor(TfCodigo.getText(), TfNombre.getText(), TfDireccion.getText(),
-                    TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()));
-            if(dproveedor.guardarProveedor(p)){
+        this.verificarDatosVacios();
+        try {
+            Producto p;
+            p = new Producto(0, TfNombre.getText(), CmbProveedor.getSelectedItem().toString(),
+                    Double.parseDouble(TfPrecio.getText()), Integer.parseInt(TfExistencia.getText()),
+                    TfCategoria.getText(), TfFechaVenc.getText());
+            if (dproducto.guardarProducto(p)) {
                 JOptionPane.showMessageDialog(this, "Registro guardado",
-                        "Proveedor", JOptionPane.INFORMATION_MESSAGE);
+                        "Producto", JOptionPane.INFORMATION_MESSAGE);
                 llenarTabla();
                 TbPanel.setSelectedIndex(1);
-            }else{
-              JOptionPane.showMessageDialog(this, "Error al guardar",
-                        "Proveedor", JOptionPane.WARNING_MESSAGE);  
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al guardar",
+                        "Producto", JOptionPane.WARNING_MESSAGE);
             }
-        }catch(HeadlessException ex){
+        } catch (HeadlessException ex) {
             System.out.println("Error al intentar guardar: " + ex.getMessage());
         }
     }//GEN-LAST:event_BtnGuardarActionPerformed
@@ -399,33 +444,34 @@ public class FrmProveedor extends javax.swing.JFrame {
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();
-         Proveedor p = new Proveedor(id, TfNombre.getText(), TfDireccion.getText(),
-                   TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()));
-          if(dproveedor.editarProveedor(p)){
-                JOptionPane.showMessageDialog(this, "Registro Editado",
-                        "Proveedor", JOptionPane.INFORMATION_MESSAGE);
-                llenarTabla();
-                TbPanel.setSelectedIndex(1);
-            }else{
-              JOptionPane.showMessageDialog(this, "Error al editar",
-                        "Proveedor", JOptionPane.WARNING_MESSAGE);  
-            }
+        Producto p = new Producto(id, TfNombre.getText(), CmbProveedor.getSelectedItem().toString(),
+                Double.parseDouble(TfPrecio.getText()), Integer.parseInt(TfExistencia.getText()),
+                TfCategoria.getText(), TfFechaVenc.getText());
+        if (dproducto.editarProducto(p)) {
+            JOptionPane.showMessageDialog(this, "Registro Editado",
+                    "Producto", JOptionPane.INFORMATION_MESSAGE);
+            llenarTabla();
+            TbPanel.setSelectedIndex(1);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al editar",
+                    "Producto", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_BtnEditarActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();
         int resp = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este registro?",
-                "Proveedor", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(resp==0){
-            if(dproveedor.eliminarProveedor(Integer.parseInt(id))){
-            JOptionPane.showMessageDialog(this, "Registro eliminado satisfactoriamente",
-                        "Proveedor", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, "Error al eliminar",
-                        "Proveedor", JOptionPane.WARNING_MESSAGE);
+                "Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (resp == 0) {
+            if (dproducto.eliminarProducto(id)) {
+                JOptionPane.showMessageDialog(this, "Registro eliminado satisfactoriamente",
+                        "Producto", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al eliminar",
+                        "Producto", JOptionPane.WARNING_MESSAGE);
             }
-         }
+        }
         llenarTabla();
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
@@ -438,8 +484,6 @@ public class FrmProveedor extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_BtnSalirActionPerformed
 
-    
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -451,13 +495,13 @@ public class FrmProveedor extends javax.swing.JFrame {
             //</editor-fold>
             UIManager.setLookAndFeel(new McWinLookAndFeel());
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(FrmProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmProveedor().setVisible(true);
+                new FrmProducto().setVisible(true);
             }
         });
     }
@@ -468,21 +512,23 @@ public class FrmProveedor extends javax.swing.JFrame {
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnNuevo;
     private javax.swing.JButton BtnSalir;
+    private javax.swing.JComboBox<String> CmbProveedor;
     private javax.swing.JPanel Datos;
     private javax.swing.JPanel Registros;
     private javax.swing.JToolBar TbComandos;
     private javax.swing.JTextField TbDato;
     private javax.swing.JTabbedPane TbPanel;
     private javax.swing.JTable TblRegistros;
-    private javax.swing.JTextField TfCodigo;
-    private javax.swing.JTextField TfDireccion;
-    private javax.swing.JTextField TfMunicipio;
+    private javax.swing.JTextField TfCategoria;
+    private javax.swing.JTextField TfExistencia;
+    private javax.swing.JTextField TfFechaVenc;
     private javax.swing.JTextField TfNombre;
-    private javax.swing.JTextField TfTelefono;
+    private javax.swing.JTextField TfPrecio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

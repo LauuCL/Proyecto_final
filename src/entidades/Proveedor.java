@@ -7,7 +7,7 @@ package entidades;
  */
 public class Proveedor {
 
-	private int IdProv;
+	private String IdProv;
 	private String nombreProv;
 	private String direccionProv;
         private String codigoMunicipio;
@@ -17,7 +17,7 @@ public class Proveedor {
 
 	}
 
-    public Proveedor(int IdProv, String nombreProv, String direccionProv,String codigoMunicipio, int telefonoProv) {
+    public Proveedor(String IdProv, String nombreProv, String direccionProv,String codigoMunicipio, int telefonoProv) {
         this.IdProv = IdProv;
         this.nombreProv = nombreProv;
         this.direccionProv = direccionProv;
@@ -30,11 +30,11 @@ public class Proveedor {
 
 	}
 
-    public int getIdProv() {
+    public String getIdProv() {
         return IdProv;
     }
 
-    public void setIdProv(int IdProv) {
+    public void setIdProv(String IdProv) {
         this.IdProv = IdProv;
     }
 

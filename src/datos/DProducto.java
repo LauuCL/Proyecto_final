@@ -4,16 +4,18 @@
  */
 package datos;
 
-import entidades.Proveedor;
+
+import entidades.Producto;
 import java.sql.*;
 import java.util.ArrayList;
 /**
  *
  * @author HP
  */
-public class DProveedor {
+public class DProducto {
     
-    private Connection conn = null;
+    
+     private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     
@@ -21,7 +23,7 @@ public class DProveedor {
     public void obtRegistros(){
         try{
             conn= Conexion.obtConexion();
-            String tSQL = "Select * from Proveedor";
+            String tSQL = "Select * from Producto";
             ps= conn.prepareStatement(tSQL,
                     ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE,
@@ -32,21 +34,23 @@ public class DProveedor {
         }
     }
     
-    public ArrayList<Proveedor> listarProveedor(){
-        ArrayList<Proveedor> lista = new ArrayList<>();
+    public ArrayList<Producto> listarProducto(){
+        ArrayList<Producto> lista = new ArrayList<>();
         try{
             this.obtRegistros();
             while(rs.next()){
-                lista.add(new Proveedor (
+                lista.add(new Producto (
+                rs.getInt("Codigo_producto"),
+                rs.getString("nombre_producto"),
                 rs.getString("codigo_proveedor"),
-                rs.getString("nombre"),
-                rs.getString("Direccion"),
-                rs.getString("Codigo_Municipio"),
-                rs.getInt("telefono")
+                rs.getDouble("precio"),
+                rs.getInt("existencia"),
+                rs.getString("categoria"),
+                rs.getString("fechaVencimiento")
                 ));
             }
         }catch(SQLException ex){
-            System.out.println("Error al listar proveedores " + ex.getMessage());
+            System.out.println("Error al listar productos " + ex.getMessage());
         }finally{
             
             try{
@@ -69,16 +73,17 @@ public class DProveedor {
         return lista;
     }
     
-    public boolean guardarProveedor(Proveedor p){
+    public boolean guardarProducto(Producto p){
         boolean guardado = false;
         this.obtRegistros();
         try{
             rs.moveToInsertRow();
-            rs.updateString("codigo_proveedor", p.getIdProv());
-            rs.updateString("nombre", p.getNombreProv());
-            rs.updateString("Direccion", p.getDireccionProv());
-            rs.updateString("Codigo_Municipio", p.getCodigoMunicipio());
-            rs.updateInt("telefono", p.getTelefonoProv());
+            rs.updateString("nombre_producto", p.getNombreProd());
+            rs.updateString("codigo_proveedor", p.getCodigoProv());
+            rs.updateDouble("precio", p.getPrecioProd());
+            rs.updateInt("existencia", p.getExistenciaProd());
+            rs.updateString("categoria", p.getCategoria());
+            rs.updateString("fechaVencimiento", p.getFechaVencimiento());
             rs.insertRow();
             rs.moveToCurrentRow();
             guardado= true;
@@ -105,19 +110,19 @@ public class DProveedor {
         return guardado;
     }
     
-    public boolean existeProveedor(int id){
+    public boolean existeProducto(int id){
         boolean resp=false;
         this.obtRegistros();
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("codigo_proveedor")== id){
+                if(rs.getInt("Codigo_producto")== id){
                     resp=true;
                     break;
                 }
             }
         }catch(SQLException ex){
-            System.out.println("Error al buscar el proveedor: " + ex.getMessage());
+            System.out.println("Error al buscar el producto: " + ex.getMessage());
         }
         
         finally{
@@ -143,17 +148,19 @@ public class DProveedor {
         return resp;
     }
     
-    public boolean editarProveedor(Proveedor p){
+    public boolean editarProducto(Producto p){
          boolean resp=false;
         this.obtRegistros();
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getString("codigo_proveedor")== p.getIdProv()){
-                     rs.updateString("nombre", p.getNombreProv());
-                     rs.updateString("Direccion", p.getDireccionProv());
-                     rs.updateString("Codigo_Municipio", p.getCodigoMunicipio());
-                     rs.updateInt("telefono", p.getTelefonoProv());
+                if(rs.getInt("Codigo_producto")== p.getIdProd()){
+                     rs.updateString("nombre_producto", p.getNombreProd());
+                     rs.updateString("codigo_proveedor", p.getCodigoProv());
+                     rs.updateDouble("precio", p.getPrecioProd());
+                     rs.updateInt("existencia", p.getExistenciaProd());
+                     rs.updateString("categoria", p.getCategoria());
+                     rs.updateString("fechaVencimiento", p.getFechaVencimiento());
                      rs.updateRow();
                     resp=true;
                     break;
@@ -187,20 +194,20 @@ public class DProveedor {
     }
     
     
-    public boolean eliminarProveedor(int id){
+    public boolean eliminarProducto(int id){
          boolean resp=false;
         this.obtRegistros();
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("codigo_proveedor")== id){
+                if(rs.getInt("Codigo_producto")== id){
                     rs.deleteRow();
                     resp=true;
                     break;
                 }
             }
         }catch(SQLException ex){
-            System.out.println("Error al eliminar el proveedor: " + ex.getMessage());
+            System.out.println("Error al eliminar el producto: " + ex.getMessage());
         }
         
         finally{
