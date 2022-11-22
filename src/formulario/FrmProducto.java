@@ -31,6 +31,12 @@ public class FrmProducto extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.llenarTabla();
+        LlenarComboBox();//Se va a rellenar el combobox cuando inicie el formulario
+    }
+    
+    public void LlenarComboBox(){
+        DProducto p = new DProducto();
+        CmbProveedor.setModel(p.llenar());//Se llena el combobox
     }
 
     private void limpiar() {
@@ -60,16 +66,16 @@ public class FrmProducto extends javax.swing.JFrame {
             }
         };
 
-        String titulos[] = {"Nombres", "Proveedor", "Existencia", "Fecha Vencimiento", "Precio", "Categoría"};
+        String titulos[] = {"Nombres", "Proveedor","Precio", "Existencia", "Categoría", "Fecha Vencimiento"};
         dtm.setColumnIdentifiers(titulos);
         for (Producto p : lista) {
             Object[] fila = new Object[]{
                 p.getNombreProd(),
                 p.getCodigoProv(),
+                 p.getPrecioProd(),
                 p.getExistenciaProd(),
-                p.getFechaVencimiento(),
-                p.getPrecioProd(),
-                p.getCategoria()
+                p.getCategoria(),
+                p.getFechaVencimiento()
             };
             dtm.addRow(fila);
         }
@@ -81,35 +87,17 @@ public class FrmProducto extends javax.swing.JFrame {
         trsFiltro.setRowFilter(RowFilter.regexFilter(TbDato.getText()));
     }
 
-    private void LlenaCombo() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = Conexion.obtConexion();
-            String tSQL = "Select codigo_proveedor from Proveedor";
-            ps = conn.prepareStatement(tSQL,
-                    ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE,
-                    ResultSet.HOLD_CURSORS_OVER_COMMIT);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                CmbProveedor.addItem(rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error al obtener registros:" + ex.getMessage());
-        }
-    }
+
 
     private void ubicarDatos() {
         int fila = TblRegistros.getSelectedRow();
         id = lista.get(fila).getIdProd();
         TfNombre.setText(lista.get(fila).getNombreProd());
         CmbProveedor.setSelectedItem(lista.get(fila).getCodigoProv());
-        TfExistencia.setText(Integer.toString(lista.get(fila).getExistenciaProd()));
-        TfFechaVenc.setText(lista.get(fila).getFechaVencimiento());
         TfPrecio.setText(Double.toString(lista.get(fila).getPrecioProd()));
-        TfCategoria.setText(lista.get(fila).getCodigoProv());
+        TfExistencia.setText(Integer.toString(lista.get(fila).getExistenciaProd()));
+         TfCategoria.setText(lista.get(fila).getCodigoProv());
+        TfFechaVenc.setText(lista.get(fila).getFechaVencimiento());
         TbPanel.setSelectedIndex(0);
         BtnGuardar.setEnabled(false);
         BtnEditar.setEnabled(true);
@@ -191,7 +179,7 @@ public class FrmProducto extends javax.swing.JFrame {
         jLabel6.setText("Código cliente:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PROVEEDOR");
+        setTitle("PRODUCTO");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Nombre: ");
@@ -286,7 +274,7 @@ public class FrmProducto extends javax.swing.JFrame {
                         .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(TfPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                             .addComponent(TfFechaVenc, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                         .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
@@ -365,7 +353,7 @@ public class FrmProducto extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(TbDato, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(291, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegistrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -385,7 +373,7 @@ public class FrmProducto extends javax.swing.JFrame {
 
         TbPanel.addTab("Registros", Registros);
 
-        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 730, 550));
+        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 820, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

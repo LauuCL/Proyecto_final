@@ -8,6 +8,7 @@ package datos;
 import entidades.Producto;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 /**
  *
  * @author HP
@@ -32,6 +33,22 @@ public class DProducto {
         }catch(SQLException ex){
             System.out.println("Error al obtener registros:" + ex.getMessage());
         }
+    }
+    
+    public DefaultComboBoxModel llenar() {
+      DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+      modelo.addElement("Seleccione");
+      try{
+          CallableStatement cst = Conexion.obtConexion().prepareCall("{CALL LlenarCombobox}");
+          ResultSet rs= cst.executeQuery();
+          while(rs.next()){//Realizamos un recorrido
+            modelo.addElement(rs.getString(1));//Agregamos los datos encontrados
+          }
+      }catch(Exception e){
+          System.out.println("Error: " + e.getMessage());
+      }
+        return modelo;
+      
     }
     
     public ArrayList<Producto> listarProducto(){
