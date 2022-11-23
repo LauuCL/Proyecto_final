@@ -49,7 +49,7 @@ public class FrmIntermedia extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BIENVENIDO AL SISTEMA");
+        setTitle("PHARMSYS");
         setBackground(new java.awt.Color(0, 51, 51));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

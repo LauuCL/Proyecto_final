@@ -161,6 +161,9 @@ public class FrmInicioSesion extends javax.swing.JFrame {
             if (rs.next()) {
                 JOptionPane.showMessageDialog(this, "Bienvenido");
                 entra = true;
+                if(TfUsuario.getText() !="admin"){
+                   
+                }
                 FrmIntermedia inter = new FrmIntermedia();
                 inter.setVisible(true);
                 this.setVisible(false);
