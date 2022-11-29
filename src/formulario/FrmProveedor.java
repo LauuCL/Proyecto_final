@@ -446,7 +446,7 @@ public class FrmProveedor extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
          int opcion = JOptionPane.showConfirmDialog(null,
-                "Está seguro que quiere cerrar la aplicación?",
+                "¿Está seguro que quiere cerrar la aplicación?",
                 "Confirmación de cierre", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 

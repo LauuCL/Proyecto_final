@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmIntermedia.java</file>
             <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmInicioSesion.java</file>
-            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/datos/DProducto.java</file>
-            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/entidades/Producto.java</file>
+            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/datos/DVenta.java</file>
+            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmVenta.java</file>
+            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/entidades/Venta.java</file>
             <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmProducto.java</file>
         </group>
     </open-files>

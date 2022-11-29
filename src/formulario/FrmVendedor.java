@@ -1,9 +1,7 @@
 package formulario;
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-import datos.DCliente;
 import datos.DVendedor;
-import entidades.Cliente;
 import entidades.Vendedor;
 import java.sql.*;
 import java.awt.HeadlessException;
@@ -36,6 +34,7 @@ public class FrmVendedor extends javax.swing.JFrame {
     }
     
     private void limpiar(){
+        TfCodigo.setText("");
         TfNombres.setText("");
         TfApellidos.setText("");
         TfDireccion.setText("");
@@ -63,10 +62,11 @@ public class FrmVendedor extends javax.swing.JFrame {
             }
         };
         
-        String titulos[] = {"Nombres", "Apellidos", "Dirección", "Teléfono", "Turno"};
+        String titulos[] = {"Código", "Nombres", "Apellidos", "Dirección", "Teléfono", "Turno"};
         dtm.setColumnIdentifiers(titulos);
         for(Vendedor v : lista){
             Object[] fila = new Object[]{
+                v.getIdVend(),
                 v.getNombreVend(),
                 v.getApellidoVend(),
                 v.getDireccionVend(),
@@ -86,7 +86,7 @@ public class FrmVendedor extends javax.swing.JFrame {
     
     private void ubicarDatos(){
         int fila = TblRegistros.getSelectedRow();
-        id = lista.get(fila).getIdVend();
+        id = Integer.parseInt(lista.get(fila).getIdVend());
         TfNombres.setText(lista.get(fila).getNombreVend());
         TfApellidos.setText(lista.get(fila).getApellidoVend());
         TfDireccion.setText(lista.get(fila).getDireccionVend());
@@ -101,6 +101,13 @@ public class FrmVendedor extends javax.swing.JFrame {
     }
     
     private void verificarDatosVacios(){
+        
+        if(TfCodigo.getText().equals("") || TfCodigo.getText().length() == 0){
+         JOptionPane.showMessageDialog(this, "Por favor verifique que el código"
+                 + "no esté vacío", "Vendedor", JOptionPane.WARNING_MESSAGE);
+         TfNombres.requestFocus();
+        }
+        
         if(TfNombres.getText().equals("") || TfNombres.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que los nombres"
                  + "no esten vacios", "Vendedor", JOptionPane.WARNING_MESSAGE);
@@ -164,6 +171,8 @@ public class FrmVendedor extends javax.swing.JFrame {
         TfTurno = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         TfMunicipio = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        TfCodigo = new javax.swing.JTextField();
         Registros = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         TbDato = new javax.swing.JTextField();
@@ -252,58 +261,69 @@ public class FrmVendedor extends javax.swing.JFrame {
 
         jLabel8.setText("Código Municipio:");
 
+        jLabel7.setText("Código del Vendedor:");
+
         javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
         Datos.setLayout(DatosLayout);
         DatosLayout.setHorizontalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DatosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(TbComandos, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+            .addGroup(DatosLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3)
-                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TfNombres)
                     .addComponent(TfApellidos)
                     .addComponent(TfDireccion)
                     .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TfTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel8)
-                .addGap(36, 36, 36))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(35, 35, 35))
+            .addGroup(DatosLayout.createSequentialGroup()
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DatosLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(TbComandos, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DatosLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(TfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DatosLayout.setVerticalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DatosLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(TbComandos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(37, 37, 37)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(TfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(TfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
+                .addGap(39, 39, 39)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(TfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(34, 34, 34)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(TfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -313,7 +333,7 @@ public class FrmVendedor extends javax.swing.JFrame {
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(TfTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         TbPanel.addTab("Datos", Datos);
@@ -408,7 +428,7 @@ public class FrmVendedor extends javax.swing.JFrame {
         // TODO add your handling code here:
          this.verificarDatosVacios();
         try{
-            Vendedor v = new Vendedor(0, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
+            Vendedor v = new Vendedor(TfCodigo.getText(), TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
                     TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfTurno.getText());
             if(dvendedor.guardarVendedor(v)){
                 JOptionPane.showMessageDialog(this, "Registro guardado",
@@ -427,7 +447,7 @@ public class FrmVendedor extends javax.swing.JFrame {
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();
-         Vendedor v = new Vendedor(id, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
+         Vendedor v = new Vendedor(TfCodigo.getText(), TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
                    TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfTurno.getText());
           if(dvendedor.editarVendedor(v)){
                 JOptionPane.showMessageDialog(this, "Registro Editado",
@@ -469,7 +489,7 @@ public class FrmVendedor extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
          int opcion = JOptionPane.showConfirmDialog(null,
-                "Está seguro que quiere cerrar la aplicación?",
+                "¿Está seguro que quiere cerrar la aplicación?",
                 "Confirmación de cierre", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 
@@ -515,6 +535,7 @@ public class FrmVendedor extends javax.swing.JFrame {
     private javax.swing.JTabbedPane TbPanel;
     private javax.swing.JTable TblRegistros;
     private javax.swing.JTextField TfApellidos;
+    private javax.swing.JTextField TfCodigo;
     private javax.swing.JTextField TfDireccion;
     private javax.swing.JTextField TfMunicipio;
     private javax.swing.JTextField TfNombres;
@@ -526,6 +547,7 @@ public class FrmVendedor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;

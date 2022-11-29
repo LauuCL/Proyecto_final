@@ -37,7 +37,6 @@ public class FrmIntermedia extends javax.swing.JFrame {
         RegistroProveedor = new javax.swing.JMenuItem();
         BtnAyuda = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         BtnAcerca = new javax.swing.JMenu();
@@ -150,14 +149,6 @@ public class FrmIntermedia extends javax.swing.JFrame {
         });
         BtnAyuda.add(jMenuItem3);
 
-        jMenuItem4.setText("¿Que hacer si el programa funciona lentamente?");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        BtnAyuda.add(jMenuItem4);
-
         jMenuItem5.setText("¿A quien puedo contactar para solicitar ayuda?");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,10 +228,10 @@ public class FrmIntermedia extends javax.swing.JFrame {
     }//GEN-LAST:event_EmpleadosRegistrosEActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        /*Informacion info = new Informacion();
+        FrmInformacion info = new FrmInformacion();
         info.setVisible(true);
         this.setVisible(false); 
-        jMenuItem9.setEnabled(false);*/
+        jMenuItem9.setEnabled(false);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void AlmacenRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlmacenRegistroActionPerformed
@@ -259,30 +250,23 @@ public class FrmIntermedia extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        JOptionPane.showMessageDialog(null, "PHARMSYS es un sistema o programa que permite a la Farmacia Altagracua desarrollarse en diferentes\n "
+        JOptionPane.showMessageDialog(null, "PHARMSYS es un sistema que permite a la Farmacia Altagracua desarrollarse en diferentes\n "
                 + "actividades. En el sector administativo, llevar control de los productos disponibles en la Farmacia y las actividades\n  "
                 + "realizadas por los trabajadores. En el sector de venta, permite llevar un registro de las ventas y agiliza el desarrollo\n "
-                + "de esta actividad para que el cliente reciba una mejor atención\n"
+                + "de esta actividad para que el cliente reciba una mejor atención.\n"
         );
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        JOptionPane.showMessageDialog(null, "Todo software instalado en el computador necesita Memoria de Acceso Aleatorio\n"
-                + "para funcionar, por lo tanto libere memoria RAM cerrando otros programas abiertos,\n "
-                + "reinicie el software, apague y reinicie su computadora\n ");
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         JOptionPane.showMessageDialog(null, "En cado de presentar problemas con el sistema, contactar a:\n"
                 + "Atención General: Operadores -> *123\n"
-                + "Propietario de farmacia: Robert Aragón -> Correo: Aragon12@gmail.com, celular: 8833-2901\n "
-                + "Gerente de farmacia: Julio Centeno -> correo: Centeno98@gmail.com, celular: 7934-2187 \n");
+                + "Soporte Técnico: Roberto Aragón -> Correo: Aragon12@gmail.com, celular: 8833-2901\n ");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         JOptionPane.showMessageDialog(null, "En caso de querer dejar un comentario constructivo puede hacerlo entrando\n"
                 + "al siguiente correo electrónico: \n"
-                + "FranLauLis18@outlook.com\n");
+                + "Pharmsys18@outlook.com\n");
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void RegistroProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroProveedorActionPerformed
@@ -335,7 +319,6 @@ public class FrmIntermedia extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     public static javax.swing.JMenuItem jMenuItem9;

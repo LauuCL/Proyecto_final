@@ -39,7 +39,7 @@ public class DVendedor {
             this.obtRegistros();
             while(rs.next()){
                 lista.add(new Vendedor (
-                rs.getInt("Codigo_vendedor"),
+                rs.getString("Codigo_vendedor"),
                 rs.getString("Nombre"),
                 rs.getString("Apellido"),
                 rs.getString("Direccion"),
@@ -77,6 +77,7 @@ public class DVendedor {
         this.obtRegistros();
         try{
             rs.moveToInsertRow();
+            rs.updateString("Codigo_vendedor", v.getIdVend());
             rs.updateString("Nombre", v.getNombreVend());
             rs.updateString("Apellido", v.getApellidoVend());
             rs.updateString("Direccion", v.getDireccionVend());
@@ -153,7 +154,7 @@ public class DVendedor {
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("Codigo_vendedor")== v.getIdVend()){
+                if(rs.getString("Codigo_vendedor")== v.getIdVend()){
                      rs.updateString("Nombre", v.getNombreVend());
                      rs.updateString("Apellido", v.getApellidoVend());
                      rs.updateString("Direccion", v.getDireccionVend());

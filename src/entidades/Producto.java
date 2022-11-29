@@ -14,6 +14,7 @@ public class Producto {
 	private int existenciaProd;
         private String categoria;
 	private String fechaVencimiento;
+        private Proveedor proveedor;
 
 	public Producto(){
 

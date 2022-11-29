@@ -68,7 +68,6 @@ public class FrmCliente extends javax.swing.JFrame {
                 c.getNombreCliente(),
                 c.getApellidoCliente(),
                 c.getDireccionCliente(),
-                c.getCodigoMunicipio(),
                 c.getTelefonoCliente(),
                 c.getEmailCliente()
             };
@@ -83,6 +82,7 @@ public class FrmCliente extends javax.swing.JFrame {
     }
     
     private void ubicarDatos(){
+         
         int fila = TblRegistros.getSelectedRow();
         id = lista.get(fila).getIdCliente();
         TfNombres.setText(lista.get(fila).getNombreCliente());
@@ -159,6 +159,7 @@ public class FrmCliente extends javax.swing.JFrame {
         BtnEditar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
         BtnSalir = new javax.swing.JButton();
+        BtnVenta = new javax.swing.JButton();
         TfCorreo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         TfMunicipio = new javax.swing.JTextField();
@@ -247,6 +248,17 @@ public class FrmCliente extends javax.swing.JFrame {
             }
         });
         TbComandos.add(BtnSalir);
+
+        BtnVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/formularios/iconos/Venta.png"))); // NOI18N
+        BtnVenta.setFocusable(false);
+        BtnVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BtnVenta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        BtnVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVentaActionPerformed(evt);
+            }
+        });
+        TbComandos.add(BtnVenta);
 
         jLabel8.setText("Código Municipio:");
 
@@ -467,7 +479,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
          int opcion = JOptionPane.showConfirmDialog(null,
-                "Está seguro que quiere cerrar la aplicación?",
+                "¿Está seguro que quiere cerrar la aplicación?",
                 "Confirmación de cierre", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 
@@ -475,6 +487,21 @@ public class FrmCliente extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void BtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVentaActionPerformed
+        // TODO add your handling code here:
+        int fila = TblRegistros.getSelectedRow();
+        FrmVenta venta = new FrmVenta();
+        venta.setVisible(true);
+        this.setVisible(false);
+        id = lista.get(fila).getIdCliente();
+        String pasardatos1 = TfNombres.getText();
+        String pasardatos2 = TfApellidos.getText();
+       //venta.TfCodigoCliente.setText(Integer.toString(id));
+        //venta.TfNombreCliente.setText(pasardatos1);
+        //venta.TfApellidoCliente.setText(pasardatos2);
+
+    }//GEN-LAST:event_BtnVentaActionPerformed
 
     
 
@@ -506,6 +533,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnNuevo;
     private javax.swing.JButton BtnSalir;
+    private javax.swing.JButton BtnVenta;
     private javax.swing.JPanel Datos;
     private javax.swing.JPanel Registros;
     private javax.swing.JToolBar TbComandos;

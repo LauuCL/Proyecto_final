@@ -8,7 +8,10 @@ package entidades;
 public class Venta {
 
 	private int numeroFactura;
+        private String  codigocliente;
+        private String codigovendedor;
 	private String fechaVenta;
+        private String codigoproducto;
 	private int cantidad;
 	private double descuento;
 
@@ -16,13 +19,19 @@ public class Venta {
 
 	}
 
-    public Venta(int numeroFactura, String fechaVenta, int cantidad, double descuento) {
+    public Venta(int numeroFactura, String codigocliente, String codigovendedor,
+            String fechaVenta, String codigoproducto, int cantidad, double descuento) {
+        
         this.numeroFactura = numeroFactura;
+        this.codigocliente = codigocliente;
+        this.codigovendedor = codigovendedor;
         this.fechaVenta = fechaVenta;
+        this.codigoproducto = codigoproducto;
         this.cantidad = cantidad;
         this.descuento = descuento;
     }
 
+    
     public int getNumeroFactura() {
         return numeroFactura;
     }
@@ -57,7 +66,32 @@ public class Venta {
 
     @Override
     public String toString() {
-        return numeroFactura + " " + fechaVenta + " " + cantidad + " " + descuento;
+        return numeroFactura + " " + codigocliente + " " + codigovendedor + " " + 
+                fechaVenta+ " " + codigoproducto + " " + cantidad + " " + descuento;
+    }
+
+    public String getCodigocliente() {
+        return codigocliente;
+    }
+
+    public void setCodigocliente(String codigocliente) {
+        this.codigocliente = codigocliente;
+    }
+
+    public String getCodigovendedor() {
+        return codigovendedor;
+    }
+
+    public void setCodigovendedor(String codigovendedor) {
+        this.codigovendedor = codigovendedor;
+    }
+
+    public String getCodigoproducto() {
+        return codigoproducto;
+    }
+
+    public void setCodigoproducto(String codigoproducto) {
+        this.codigoproducto = codigoproducto;
     }
 
         
