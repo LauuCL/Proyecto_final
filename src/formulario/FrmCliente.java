@@ -19,7 +19,7 @@ import javax.swing.table.TableRowSorter;
 
 public class FrmCliente extends javax.swing.JFrame {
 
-     private int id;
+     private String id;
     private DCliente dcliente = new DCliente();
     private ArrayList<Cliente> lista = new ArrayList<>();
     
@@ -34,6 +34,7 @@ public class FrmCliente extends javax.swing.JFrame {
     }
     
     private void limpiar(){
+        TfCedula.setText("");
         TfNombres.setText("");
         TfApellidos.setText("");
         TfDireccion.setText("");
@@ -61,10 +62,11 @@ public class FrmCliente extends javax.swing.JFrame {
             }
         };
         
-        String titulos[] = {"Nombres", "Apellidos", "Dirección", "Teléfono", "Correo eléctronico"};
+        String titulos[] = {"Cédula", "Nombres", "Apellidos", "Dirección", "Teléfono", "Correo eléctronico"};
         dtm.setColumnIdentifiers(titulos);
         for(Cliente c : lista){
             Object[] fila = new Object[]{
+                c.getIdCliente(),
                 c.getNombreCliente(),
                 c.getApellidoCliente(),
                 c.getDireccionCliente(),
@@ -99,6 +101,14 @@ public class FrmCliente extends javax.swing.JFrame {
     }
     
     private void verificarDatosVacios(){
+        
+         if(TfCedula.getText().equals("") || TfCedula.getText().length() == 0){
+         JOptionPane.showMessageDialog(this, "Por favor verifique que la cédula"
+                 + "no esté vacio", "Cliente", JOptionPane.WARNING_MESSAGE);
+         TfCedula.requestFocus();
+        }
+         
+         
         if(TfNombres.getText().equals("") || TfNombres.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que los nombres"
                  + "no esten vacios", "Cliente", JOptionPane.WARNING_MESSAGE);
@@ -163,6 +173,8 @@ public class FrmCliente extends javax.swing.JFrame {
         TfCorreo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         TfMunicipio = new javax.swing.JTextField();
+        TfCedula = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         Registros = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         TbDato = new javax.swing.JTextField();
@@ -262,6 +274,8 @@ public class FrmCliente extends javax.swing.JFrame {
 
         jLabel8.setText("Código Municipio:");
 
+        jLabel7.setText("Cédula:");
+
         javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
         Datos.setLayout(DatosLayout);
         DatosLayout.setHorizontalGroup(
@@ -269,7 +283,7 @@ public class FrmCliente extends javax.swing.JFrame {
             .addGroup(DatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(TbComandos, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,12 +302,20 @@ public class FrmCliente extends javax.swing.JFrame {
                     .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TfCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(36, 36, 36))
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(80, 80, 80))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
+                        .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addComponent(TfCedula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         DatosLayout.setVerticalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,8 +325,11 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(TfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
+                    .addComponent(TfNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addComponent(TfCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(TfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -360,7 +385,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(TbDato, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegistrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -380,7 +405,7 @@ public class FrmCliente extends javax.swing.JFrame {
 
         TbPanel.addTab("Registros", Registros);
 
-        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 730, 550));
+        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 780, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -418,7 +443,7 @@ public class FrmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
          this.verificarDatosVacios();
         try{
-            Cliente c = new Cliente(0, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
+            Cliente c = new Cliente(TfCedula.getText(), TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
                     TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfCorreo.getText());
             if(dcliente.guardarCliente(c)){
                 JOptionPane.showMessageDialog(this, "Registro guardado",
@@ -494,9 +519,9 @@ public class FrmCliente extends javax.swing.JFrame {
         FrmVenta venta = new FrmVenta();
         venta.setVisible(true);
         this.setVisible(false);
-        id = lista.get(fila).getIdCliente();
-        String pasardatos1 = TfNombres.getText();
-        String pasardatos2 = TfApellidos.getText();
+       // String ced = lista.get(fila).getIdCliente();
+        //String pasardatos1 = TfNombres.getText();
+        //String pasardatos2 = TfApellidos.getText();
        //venta.TfCodigoCliente.setText(Integer.toString(id));
         //venta.TfNombreCliente.setText(pasardatos1);
         //venta.TfApellidoCliente.setText(pasardatos2);
@@ -541,6 +566,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JTabbedPane TbPanel;
     private javax.swing.JTable TblRegistros;
     private javax.swing.JTextField TfApellidos;
+    private javax.swing.JTextField TfCedula;
     private javax.swing.JTextField TfCorreo;
     private javax.swing.JTextField TfDireccion;
     private javax.swing.JTextField TfMunicipio;
@@ -552,6 +578,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;

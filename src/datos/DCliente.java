@@ -38,7 +38,7 @@ public class DCliente {
             this.obtRegistros();
             while(rs.next()){
                 lista.add(new Cliente (
-                rs.getInt("Codigo_cliente"),
+                rs.getString("Codigo_cliente"),
                 rs.getString("Nombre"),
                 rs.getString("Apellido"),
                 rs.getString("Direccion"),
@@ -76,6 +76,7 @@ public class DCliente {
         this.obtRegistros();
         try{
             rs.moveToInsertRow();
+            rs.updateString("Codigo_cliente", c.getIdCliente());
             rs.updateString("Nombre", c.getNombreCliente());
             rs.updateString("Apellido", c.getApellidoCliente());
             rs.updateString("Direccion", c.getDireccionCliente());
@@ -152,7 +153,7 @@ public class DCliente {
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("Codigo_cliente")== c.getIdCliente()){
+                if(rs.getString("Codigo_cliente")== c.getIdCliente()){
                      rs.updateString("Nombre", c.getNombreCliente());
                      rs.updateString("Apellido", c.getApellidoCliente());
                      rs.updateString("Direccion", c.getDireccionCliente());
@@ -192,13 +193,13 @@ public class DCliente {
     }
     
     
-    public boolean eliminarCliente(int id){
+    public boolean eliminarCliente(String id){
          boolean resp=false;
         this.obtRegistros();
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("Codigo_cliente")== id){
+                if(rs.getString("Codigo_cliente")== id){
                     rs.deleteRow();
                     resp=true;
                     break;

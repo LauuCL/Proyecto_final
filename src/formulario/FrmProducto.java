@@ -417,7 +417,8 @@ public class FrmProducto extends javax.swing.JFrame {
         this.verificarDatosVacios();
         try {
             Producto p;
-            p = new Producto(0, TfNombre.getText(), CmbProveedor.getSelectedItem().toString(),
+            String proveedor = obtenerCodigo();
+            p = new Producto(0, TfNombre.getText(), proveedor,
                     Double.parseDouble(TfPrecio.getText()), Integer.parseInt(TfExistencia.getText()),
                     TfCategoria.getText(), TfFechaVenc.getText());
             if (dproducto.guardarProducto(p)) {
@@ -434,6 +435,17 @@ public class FrmProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
+    private String obtenerCodigo(){
+        String proveedor = CmbProveedor.getSelectedItem().toString();
+        String codigoProveedor = "";
+        for(int i =0; i<proveedor.length(); i++){
+            if(proveedor.charAt(i) == '-'){
+                return codigoProveedor.trim();
+            }
+            codigoProveedor += proveedor.charAt(i);
+        }
+        return codigoProveedor.trim();
+    }
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();

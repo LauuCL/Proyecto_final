@@ -7,7 +7,7 @@ package entidades;
  */
 public class Cliente {
 
-	private int idCliente;
+	private String idCliente;
 	private String nombreCliente;
 	private String apellidoCliente;
 	private String direccionCliente;
@@ -15,7 +15,7 @@ public class Cliente {
 	private int telefonoCliente;
 	private String emailCliente;
 
-    public Cliente(int idCliente, String nombreCliente, String apellidoCliente, String direccionCliente, 
+    public Cliente(String idCliente, String nombreCliente, String apellidoCliente, String direccionCliente, 
             String codigoMunicipio, int telefonoCliente, String emailCliente) {
         
         this.idCliente = idCliente;
@@ -31,11 +31,11 @@ public class Cliente {
 
 	}
 
-    public int getIdCliente() {
+    public String getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
     }
 

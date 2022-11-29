@@ -60,7 +60,8 @@ public class DVenta {
           CallableStatement cst = Conexion.obtConexion().prepareCall("{CALL LlenarComboVendedor}");
           ResultSet rs= cst.executeQuery();
           while(rs.next()){//Realizamos un recorrido
-            modelo.addElement(rs.getString(1));//Agregamos los datos encontrados
+               String vendedor = rs.getString(1) + " - " + rs.getString(2);
+            modelo.addElement(vendedor);//Agregamos los datos encontrados
           }
       }catch(Exception e){
           System.out.println("Error: " + e.getMessage());
@@ -79,7 +80,7 @@ public class DVenta {
                 rs.getInt("Codigo_venta"),
                 rs.getString("Codigo_cliente"),
                 rs.getString("Codigo_vendedor"),
-                rs.getString("Fecha_compra"),
+                rs.getString("Fecha_venta"),
                 rs2.getString("Codigo_producto"),
                 rs2.getInt("Cantidad"),
                 rs2.getDouble("Descuento")
@@ -118,7 +119,7 @@ public class DVenta {
             rs.updateInt("Codigo_venta", v.getNumeroFactura());
             rs.updateString("Codigo_cliente", v.getCodigocliente());
             rs.updateString("Codigo_vendedor", v.getCodigovendedor());
-            rs.updateString("Fecha_compra", v.getFechaVenta());
+            rs.updateString("Fecha_venta", v.getFechaVenta());
             rs2.updateString("Codigo_producto", v.getCodigoproducto());
             rs2.updateInt("Cantidad", v.getCantidad());
             rs2.updateDouble("Descuento", v.getDescuento());
@@ -206,7 +207,7 @@ public class DVenta {
                 if(rs.getInt("Codigo_venta")== v.getNumeroFactura()){
                     rs.updateString("Codigo_cliente", v.getCodigocliente());
                     rs.updateString("Codigo_vendedor", v.getCodigovendedor());
-                    rs.updateString("Fecha_compra", v.getFechaVenta());
+                    rs.updateString("Fecha_venta", v.getFechaVenta());
                      rs.updateRow();
                     resp=true;
                     break;

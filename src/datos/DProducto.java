@@ -44,7 +44,8 @@ public class DProducto {
           CallableStatement cst = Conexion.obtConexion().prepareCall("{CALL LlenarCombobox}");
           ResultSet rs= cst.executeQuery();
           while(rs.next()){//Realizamos un recorrido
-            modelo.addElement(rs.getString(1));//Agregamos los datos encontrados
+              String proveedor = rs.getString(1) + " - " + rs.getString(2);
+            modelo.addElement(proveedor);//Agregamos los datos encontrados
           }
       }catch(Exception e){
           System.out.println("Error: " + e.getMessage());
