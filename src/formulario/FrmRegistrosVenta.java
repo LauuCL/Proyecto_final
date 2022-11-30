@@ -50,7 +50,7 @@ public class FrmRegistrosVenta extends javax.swing.JFrame {
             }
         };
         
-        String titulos[] = {"Código", "Cliente", "Vendedor", "Fecha"};
+        String titulos[] = {"Código", "Cliente", "Vendedor", "Fecha", "Producto", "Cantidad", "Descuento"};
         dtm.setColumnIdentifiers(titulos);
         for(Venta v : lista){
             Object[] fila = new Object[]{
@@ -58,6 +58,9 @@ public class FrmRegistrosVenta extends javax.swing.JFrame {
                 v.getCodigocliente(),
                 v.getCodigovendedor(),
                 v.getFechaVenta(),
+                v.getCodigoproducto(),
+                v.getCantidad(),
+                v.getDescuento()
             };
             dtm.addRow(fila);
         }

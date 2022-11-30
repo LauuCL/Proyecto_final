@@ -60,7 +60,7 @@ public class FrmProveedor extends javax.swing.JFrame {
             }
         };
         
-        String titulos[] = {"Código", "Nombre", "Dirección", "Teléfono"};
+        String titulos[] = {"Código", "Nombre", "Dirección", "Municipio", "Teléfono"};
         dtm.setColumnIdentifiers(titulos);
         for(Proveedor p : lista){
             Object[] fila = new Object[]{
@@ -82,7 +82,7 @@ public class FrmProveedor extends javax.swing.JFrame {
     
     private void ubicarDatos(){
         int fila = TblRegistros.getSelectedRow();
-        id = lista.get(fila).getIdProv();
+        TfCodigo.setText(lista.get(fila).getIdProv());
         TfNombre.setText(lista.get(fila).getNombreProv());
         TfDireccion.setText(lista.get(fila).getDireccionProv());
         TfMunicipio.setText(lista.get(fila).getCodigoMunicipio());
@@ -263,7 +263,7 @@ public class FrmProveedor extends javax.swing.JFrame {
                             .addComponent(TfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                             .addComponent(TfCodigo)
                             .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         DatosLayout.setVerticalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,7 +327,7 @@ public class FrmProveedor extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(TbDato, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegistrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -347,7 +347,7 @@ public class FrmProveedor extends javax.swing.JFrame {
 
         TbPanel.addTab("Registros", Registros);
 
-        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 730, 550));
+        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 810, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -404,7 +404,7 @@ public class FrmProveedor extends javax.swing.JFrame {
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();
-         Proveedor p = new Proveedor(id, TfNombre.getText(), TfDireccion.getText(),
+         Proveedor p = new Proveedor(TfCodigo.getText(), TfNombre.getText(), TfDireccion.getText(),
                    TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()));
           if(dproveedor.editarProveedor(p)){
                 JOptionPane.showMessageDialog(this, "Registro Editado",
@@ -423,7 +423,7 @@ public class FrmProveedor extends javax.swing.JFrame {
         int resp = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este registro?",
                 "Proveedor", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(resp==0){
-            if(dproveedor.eliminarProveedor(Integer.parseInt(id))){
+            if(dproveedor.eliminarProveedor(TfCodigo.getText())){
             JOptionPane.showMessageDialog(this, "Registro eliminado satisfactoriamente",
                         "Proveedor", JOptionPane.INFORMATION_MESSAGE);
         }else{

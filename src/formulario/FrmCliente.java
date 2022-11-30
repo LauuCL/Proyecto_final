@@ -86,7 +86,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private void ubicarDatos(){
          
         int fila = TblRegistros.getSelectedRow();
-        id = lista.get(fila).getIdCliente();
+        TfCedula.setText(lista.get(fila).getIdCliente());
         TfNombres.setText(lista.get(fila).getNombreCliente());
         TfApellidos.setText(lista.get(fila).getApellidoCliente());
         TfDireccion.setText(lista.get(fila).getDireccionCliente());
@@ -462,7 +462,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();
-         Cliente c = new Cliente(id, TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
+         Cliente c = new Cliente(TfCedula.getText(), TfNombres.getText(), TfApellidos.getText(), TfDireccion.getText(),
                    TfMunicipio.getText(), Integer.parseInt(TfTelefono.getText()), TfCorreo.getText());
           if(dcliente.editarCliente(c)){
                 JOptionPane.showMessageDialog(this, "Registro Editado",
@@ -481,7 +481,7 @@ public class FrmCliente extends javax.swing.JFrame {
         int resp = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este registro?",
                 "Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(resp==0){
-            if(dcliente.eliminarCliente(id)){
+            if(dcliente.eliminarCliente(TfCedula.getText())){
             JOptionPane.showMessageDialog(this, "Registro eliminado satisfactoriamente",
                         "Cliente", JOptionPane.INFORMATION_MESSAGE);
         }else{

@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmInicioSesion.java</file>
+            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmRegistrosVenta.java</file>
             <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/datos/DVenta.java</file>
-            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/entidades/Venta.java</file>
             <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmVenta.java</file>
             <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmCliente.java</file>
+            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/datos/DProducto.java</file>
+            <file>file:/C:/Users/HP/Desktop/Proyecto%20Metpoo/Proyecto_final/src/formulario/FrmProducto.java</file>
         </group>
     </open-files>
 </project-private>

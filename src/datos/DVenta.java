@@ -40,7 +40,10 @@ public class DVenta {
     public void obtRegistrosDetalleVenta(){
         try{
             conn= Conexion.obtConexion();
-            String tSQL = "Select * from Detalle_venta";
+            String tSQL = "SELECT dbo.Venta.Codigo_venta, dbo.Venta.Codigo_cliente, dbo.Venta.Codigo_vendedor, "
+                    + "dbo.Venta.Fecha_venta, dbo.Detalle_venta.Codigo_producto, dbo.Detalle_venta.Cantidad, dbo.Detalle_venta.Descuento\n" +
+               "FROM dbo.Venta INNER JOIN\n" +
+               "dbo.Detalle_venta ON dbo.Venta.Codigo_venta = dbo.Detalle_venta.Codigo_venta";
             ps2= conn.prepareStatement(tSQL,
                     ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE,
@@ -73,21 +76,20 @@ public class DVenta {
     public ArrayList<Venta> listarVenta(){
         ArrayList<Venta> lista = new ArrayList<>();
         try{
-            this.obtRegistrosVenta();
             this.obtRegistrosDetalleVenta();
-            while(rs.next()){
+            while(rs2.next()){
                 lista.add(new Venta (
-                rs.getInt("Codigo_venta"),
-                rs.getString("Codigo_cliente"),
-                rs.getString("Codigo_vendedor"),
-                rs.getString("Fecha_venta"),
+                rs2.getString("Codigo_venta"),
+                rs2.getString("Codigo_cliente"),
+                rs2.getString("Codigo_vendedor"),
+                rs2.getString("Fecha_venta"),
                 rs2.getString("Codigo_producto"),
                 rs2.getInt("Cantidad"),
                 rs2.getDouble("Descuento")
                 ));
             }
         }catch(SQLException ex){
-            System.out.println("Error al listar productos " + ex.getMessage());
+            System.out.println("Error al listar venta " + ex.getMessage());
         }finally{
             
             try{
@@ -116,7 +118,7 @@ public class DVenta {
         this.obtRegistrosDetalleVenta();
         try{
             rs.moveToInsertRow();
-            rs.updateInt("Codigo_venta", v.getNumeroFactura());
+            rs.updateString("Codigo_venta", v.getNumeroFactura());
             rs.updateString("Codigo_cliente", v.getCodigocliente());
             rs.updateString("Codigo_vendedor", v.getCodigovendedor());
             rs.updateString("Fecha_venta", v.getFechaVenta());
@@ -204,7 +206,7 @@ public class DVenta {
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("Codigo_venta")== v.getNumeroFactura()){
+                if(rs.getString("Codigo_venta")== v.getNumeroFactura()){
                     rs.updateString("Codigo_cliente", v.getCodigocliente());
                     rs.updateString("Codigo_vendedor", v.getCodigovendedor());
                     rs.updateString("Fecha_venta", v.getFechaVenta());
@@ -216,7 +218,7 @@ public class DVenta {
             
             rs2.beforeFirst();
             while(rs2.next()){
-                if(rs2.getInt("Codigo_venta")== v.getNumeroFactura()){
+                if(rs2.getString("Codigo_venta")== v.getNumeroFactura()){
                    rs2.updateString("Codigo_producto", v.getCodigoproducto());
                    rs2.updateInt("Cantidad", v.getCantidad());
                    rs2.updateDouble("Descuento", v.getDescuento());

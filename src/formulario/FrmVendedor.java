@@ -62,7 +62,7 @@ public class FrmVendedor extends javax.swing.JFrame {
             }
         };
         
-        String titulos[] = {"Código", "Nombres", "Apellidos", "Dirección", "Teléfono", "Turno"};
+        String titulos[] = {"Código", "Nombres", "Apellidos", "Dirección", "Municipio", "Teléfono", "Turno"};
         dtm.setColumnIdentifiers(titulos);
         for(Vendedor v : lista){
             Object[] fila = new Object[]{
@@ -86,7 +86,7 @@ public class FrmVendedor extends javax.swing.JFrame {
     
     private void ubicarDatos(){
         int fila = TblRegistros.getSelectedRow();
-        id = Integer.parseInt(lista.get(fila).getIdVend());
+        TfCodigo.setText(lista.get(fila).getIdVend());
         TfNombres.setText(lista.get(fila).getNombreVend());
         TfApellidos.setText(lista.get(fila).getApellidoVend());
         TfDireccion.setText(lista.get(fila).getDireccionVend());
@@ -97,17 +97,17 @@ public class FrmVendedor extends javax.swing.JFrame {
         BtnGuardar.setEnabled(false);
         BtnEditar.setEnabled(true);
         BtnEliminar.setEnabled(true);
-        TfNombres.requestFocus();
+        TfCodigo.requestFocus();
     }
     
     private void verificarDatosVacios(){
         
-        if(TfCodigo.getText().equals("") || TfCodigo.getText().length() == 0){
+         if(TfCodigo.getText().equals("") || TfCodigo.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que el código"
                  + "no esté vacío", "Vendedor", JOptionPane.WARNING_MESSAGE);
-         TfNombres.requestFocus();
+         TfCodigo.requestFocus();
         }
-        
+         
         if(TfNombres.getText().equals("") || TfNombres.getText().length() == 0){
          JOptionPane.showMessageDialog(this, "Por favor verifique que los nombres"
                  + "no esten vacios", "Vendedor", JOptionPane.WARNING_MESSAGE);
@@ -267,10 +267,6 @@ public class FrmVendedor extends javax.swing.JFrame {
         Datos.setLayout(DatosLayout);
         DatosLayout.setHorizontalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
             .addGroup(DatosLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -279,16 +275,14 @@ public class FrmVendedor extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TfNombres)
                     .addComponent(TfApellidos)
                     .addComponent(TfDireccion)
                     .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TfTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
-                .addGap(37, 37, 37)
-                .addComponent(jLabel8)
-                .addGap(35, 35, 35))
+                .addGap(171, 171, 171))
             .addGroup(DatosLayout.createSequentialGroup()
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DatosLayout.createSequentialGroup()
@@ -298,8 +292,12 @@ public class FrmVendedor extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(TfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         DatosLayout.setVerticalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,7 +307,9 @@ public class FrmVendedor extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(TfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
@@ -321,11 +321,8 @@ public class FrmVendedor extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(TfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TfMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                    .addComponent(TfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(TfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -370,7 +367,7 @@ public class FrmVendedor extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(TbDato, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(291, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegistrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -390,7 +387,7 @@ public class FrmVendedor extends javax.swing.JFrame {
 
         TbPanel.addTab("Registros", Registros);
 
-        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 730, 550));
+        getContentPane().add(TbPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 820, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -466,7 +463,7 @@ public class FrmVendedor extends javax.swing.JFrame {
         int resp = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este registro?",
                 "Vendedor", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(resp==0){
-            if(dvendedor.eliminarVendedor(id)){
+            if(dvendedor.eliminarVendedor(TfCodigo.getText())){
             JOptionPane.showMessageDialog(this, "Registro eliminado satisfactoriamente",
                         "Vendedor", JOptionPane.INFORMATION_MESSAGE);
         }else{

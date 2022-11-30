@@ -7,7 +7,7 @@ package entidades;
  */
 public class Venta {
 
-	private int numeroFactura;
+	private String numeroFactura;
         private String  codigocliente;
         private String codigovendedor;
 	private String fechaVenta;
@@ -19,7 +19,7 @@ public class Venta {
 
 	}
 
-    public Venta(int numeroFactura, String codigocliente, String codigovendedor,
+    public Venta(String numeroFactura, String codigocliente, String codigovendedor,
             String fechaVenta, String codigoproducto, int cantidad, double descuento) {
         
         this.numeroFactura = numeroFactura;
@@ -32,11 +32,11 @@ public class Venta {
     }
 
     
-    public int getNumeroFactura() {
+    public String getNumeroFactura() {
         return numeroFactura;
     }
 
-    public void setNumeroFactura(int numeroFactura) {
+    public void setNumeroFactura(String numeroFactura) {
         this.numeroFactura = numeroFactura;
     }
 

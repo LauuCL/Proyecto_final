@@ -109,13 +109,13 @@ public class DCliente {
         return guardado;
     }
     
-    public boolean existeCliente(int id){
+    public boolean existeCliente(String id){
         boolean resp=false;
         this.obtRegistros();
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("Codigo_cliente")== id){
+                if(rs.getString("Codigo_cliente").equals(id)){
                     resp=true;
                     break;
                 }
@@ -153,7 +153,7 @@ public class DCliente {
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getString("Codigo_cliente")== c.getIdCliente()){
+                if(rs.getString("Codigo_cliente").equals(c.getIdCliente())){
                      rs.updateString("Nombre", c.getNombreCliente());
                      rs.updateString("Apellido", c.getApellidoCliente());
                      rs.updateString("Direccion", c.getDireccionCliente());
@@ -199,7 +199,7 @@ public class DCliente {
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getString("Codigo_cliente")== id){
+                if(rs.getString("Codigo_cliente").equals(id)){
                     rs.deleteRow();
                     resp=true;
                     break;

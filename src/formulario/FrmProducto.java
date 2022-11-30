@@ -96,7 +96,7 @@ public class FrmProducto extends javax.swing.JFrame {
         CmbProveedor.setSelectedItem(lista.get(fila).getCodigoProv());
         TfPrecio.setText(Double.toString(lista.get(fila).getPrecioProd()));
         TfExistencia.setText(Integer.toString(lista.get(fila).getExistenciaProd()));
-         TfCategoria.setText(lista.get(fila).getCodigoProv());
+         TfCategoria.setText(lista.get(fila).getCategoria());
         TfFechaVenc.setText(lista.get(fila).getFechaVencimiento());
         TbPanel.setSelectedIndex(0);
         BtnGuardar.setEnabled(false);
@@ -272,25 +272,21 @@ public class FrmProducto extends javax.swing.JFrame {
                     .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel8)
                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel2))
                 .addGap(50, 50, 50)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DatosLayout.createSequentialGroup()
-                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(TfPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                            .addComponent(TfFechaVenc, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                        .addComponent(TfFechaVenc, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(364, Short.MAX_VALUE))
+                    .addGroup(DatosLayout.createSequentialGroup()
                         .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DatosLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(56, 56, 56)))
-                        .addContainerGap())
-                    .addGroup(DatosLayout.createSequentialGroup()
-                        .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(TfCategoria, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TfExistencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(TfNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
+                            .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(TfCategoria, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TfExistencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                                .addComponent(TfNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
+                            .addComponent(TfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         DatosLayout.setVerticalGroup(
@@ -314,14 +310,15 @@ public class FrmProducto extends javax.swing.JFrame {
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(TfFechaVenc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(40, 40, 40)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
                     .addComponent(TfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(146, Short.MAX_VALUE))
+                    .addComponent(jLabel4))
+                .addGap(44, 44, 44)
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         TbPanel.addTab("Datos", Datos);
@@ -446,10 +443,12 @@ public class FrmProducto extends javax.swing.JFrame {
         }
         return codigoProveedor.trim();
     }
+    
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
         this.verificarDatosVacios();
-        Producto p = new Producto(id, TfNombre.getText(), CmbProveedor.getSelectedItem().toString(),
+        String proveedor = obtenerCodigo();
+        Producto p = new Producto(id, TfNombre.getText(), proveedor,
                 Double.parseDouble(TfPrecio.getText()), Integer.parseInt(TfExistencia.getText()),
                 TfCategoria.getText(), TfFechaVenc.getText());
         if (dproducto.editarProducto(p)) {

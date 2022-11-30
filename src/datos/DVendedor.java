@@ -154,7 +154,7 @@ public class DVendedor {
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getString("Codigo_vendedor")== v.getIdVend()){
+                if(rs.getString("Codigo_vendedor").equals(v.getIdVend())){
                      rs.updateString("Nombre", v.getNombreVend());
                      rs.updateString("Apellido", v.getApellidoVend());
                      rs.updateString("Direccion", v.getDireccionVend());
@@ -194,13 +194,13 @@ public class DVendedor {
     }
     
     
-    public boolean eliminarVendedor(int id){
+    public boolean eliminarVendedor(String id){
          boolean resp=false;
         this.obtRegistros();
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("Codigo_vendedor")== id){
+                if(rs.getString("Codigo_vendedor").equals(id)){
                     rs.deleteRow();
                     resp=true;
                     break;

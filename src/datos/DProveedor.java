@@ -149,7 +149,7 @@ public class DProveedor {
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getString("codigo_proveedor")== p.getIdProv()){
+                if(rs.getString("codigo_proveedor").equals(p.getIdProv())){
                      rs.updateString("nombre", p.getNombreProv());
                      rs.updateString("Direccion", p.getDireccionProv());
                      rs.updateString("Codigo_Municipio", p.getCodigoMunicipio());
@@ -160,7 +160,7 @@ public class DProveedor {
                 }
             }
         }catch(SQLException ex){
-            System.out.println("Error al editar: " + ex.getMessage());
+            System.out.println("Error al editar: " + ex.getMessage().toString());
         }
         
         finally{
@@ -187,13 +187,13 @@ public class DProveedor {
     }
     
     
-    public boolean eliminarProveedor(int id){
+    public boolean eliminarProveedor(String id){
          boolean resp=false;
         this.obtRegistros();
         try{
             rs.beforeFirst();
             while(rs.next()){
-                if(rs.getInt("codigo_proveedor")== id){
+                if(rs.getString("codigo_proveedor").equals(id)){
                     rs.deleteRow();
                     resp=true;
                     break;

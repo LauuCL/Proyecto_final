@@ -31,7 +31,7 @@ import javax.swing.table.TableRowSorter;
 
 public class FrmVenta extends javax.swing.JFrame {
 
-    private int id;
+    private String id;
     public static DefaultTableModel nueva_tabla = new DefaultTableModel();
     private DVenta dventa = new DVenta();
     private ArrayList<Venta> lista = new ArrayList<>();
@@ -49,10 +49,25 @@ public class FrmVenta extends javax.swing.JFrame {
 
     }
     
+    
      public void LlenarComboBox(){
         DVenta p = new DVenta();
         CmbVendedor.setModel(p.llenar());//Se llena el combobox
     }
+     
+   /* public void LlenarTextfield(){
+          Conexion con = new Conexion();
+   try {
+        PreparedStatement ps = Conexion.obtConexion().prepareStatement("Select Codigo_venta from Venta");
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){//Realizamos un recorrido
+       this.TfVenta.setText(rs.getString("Codigo_producto"));
+        }
+   } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+       }
+     }*/
+     
      
       public void CargarTablaProducto(){
         
@@ -149,6 +164,14 @@ public class FrmVenta extends javax.swing.JFrame {
 
   
     private void verificarDatosVacios() {
+        
+         if (TfVenta.getText().equals("") || TfVenta.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor verifique que el número de factura"
+                    + "no esté vacía", "Venta", JOptionPane.WARNING_MESSAGE);
+            TfVenta.requestFocus();
+        }
+         
+         
         if (TfFecha.getText().equals("") || TfFecha.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor verifique que la fecha"
                     + "no esté vacía", "Venta", JOptionPane.WARNING_MESSAGE);
@@ -249,8 +272,6 @@ public class FrmVenta extends javax.swing.JFrame {
 
         jLabel6.setText("Factura No:");
         DatosCliente.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
-
-        TfVenta.setEnabled(false);
         DatosCliente.add(TfVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 110, 30));
 
         jLabel14.setText("Atendido por:");
@@ -519,17 +540,17 @@ public class FrmVenta extends javax.swing.JFrame {
        
         try{
              String proveedor = obtenerCodigo();
-            CallableStatement cst = Conexion.obtConexion().prepareCall("{CALL Ingresar_Venta (?,?,?)}");
-            cst.setString(1, (TfCodigoCliente.getText()));
-            cst.setString(2, (proveedor));
-            cst.setString(3, (TfFecha.getText()));
+            CallableStatement cst = Conexion.obtConexion().prepareCall("{CALL Ingresar_Venta (?,?,?,?)}");
+            cst.setString(1, (TfVenta.getText()));
+            cst.setString(2, (TfCodigoCliente.getText()));
+            cst.setString(3, (proveedor));
+            cst.setString(4, (TfFecha.getText()));
             cst.executeUpdate();
             boolean entra = false;
            
             JOptionPane.showMessageDialog(this, "Venta Registrado Correctamente");
             
-            Venta v = new Venta();
-            TfVenta.setText(Integer.toString(v.getNumeroFactura()));
+          // LlenarTextfield();
             
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, ex);
