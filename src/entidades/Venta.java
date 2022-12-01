@@ -13,14 +13,14 @@ public class Venta {
 	private String fechaVenta;
         private String codigoproducto;
 	private int cantidad;
-	private double descuento;
+	private int descuento;
 
 	public Venta(){
 
 	}
 
     public Venta(String numeroFactura, String codigocliente, String codigovendedor,
-            String fechaVenta, String codigoproducto, int cantidad, double descuento) {
+            String fechaVenta, String codigoproducto, int cantidad, int descuento) {
         
         this.numeroFactura = numeroFactura;
         this.codigocliente = codigocliente;
@@ -56,11 +56,11 @@ public class Venta {
         this.cantidad = cantidad;
     }
 
-    public double getDescuento() {
+    public int getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(double descuento) {
+    public void setDescuento(int descuento) {
         this.descuento = descuento;
     }
 

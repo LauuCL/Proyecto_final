@@ -85,7 +85,7 @@ public class DVenta {
                 rs2.getString("Fecha_venta"),
                 rs2.getString("Codigo_producto"),
                 rs2.getInt("Cantidad"),
-                rs2.getDouble("Descuento")
+                rs2.getInt("Descuento")
                 ));
             }
         }catch(SQLException ex){
@@ -124,7 +124,7 @@ public class DVenta {
             rs.updateString("Fecha_venta", v.getFechaVenta());
             rs2.updateString("Codigo_producto", v.getCodigoproducto());
             rs2.updateInt("Cantidad", v.getCantidad());
-            rs2.updateDouble("Descuento", v.getDescuento());
+            rs2.updateInt("Descuento", v.getDescuento());
             rs.insertRow();
             rs.moveToCurrentRow();
             rs2.insertRow();
@@ -221,7 +221,7 @@ public class DVenta {
                 if(rs2.getString("Codigo_venta")== v.getNumeroFactura()){
                    rs2.updateString("Codigo_producto", v.getCodigoproducto());
                    rs2.updateInt("Cantidad", v.getCantidad());
-                   rs2.updateDouble("Descuento", v.getDescuento());
+                   rs2.updateInt("Descuento", v.getDescuento());
                     rs2.updateRow();
                     resp=true;
                     break;

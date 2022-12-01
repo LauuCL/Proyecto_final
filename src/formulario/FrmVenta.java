@@ -116,6 +116,7 @@ public class FrmVenta extends javax.swing.JFrame {
         
           DefaultTableModel dtm = (DefaultTableModel) TblProductosAdquiridos.getModel();
           dtm.setRowCount(0);
+          
            ResultSet rs;
            ResultSetMetaData rsmd;
            int columnas;
@@ -125,14 +126,14 @@ public class FrmVenta extends javax.swing.JFrame {
             Conexion con = new Conexion();
             
              CallableStatement cst = Conexion.obtConexion().prepareCall("{Call Cargar_TablaVenta (?)}");
-             cst.setString(1, TfProducto.getText());
+             cst.setString(1, (TfVenta.getText()));
              rs = cst.executeQuery();
              rsmd = rs.getMetaData();
              columnas = rsmd.getColumnCount();
             while(rs.next()){
                 Object[] filas = new Object[columnas];
                for(int i = 0; i<columnas; i++){
-                   filas[i] = rs.getObject(i+1);
+                   filas[i] = rs.getObject(i + 1);
                }
                 
                 dtm.addRow(filas);
@@ -344,7 +345,7 @@ public class FrmVenta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Precio", "Medicamento", "Cantidad", "Total"
+                "Código", "Medicamento", "Precio", "Cantidad", "Total"
             }
         ));
         TblProductosAdquiridos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -560,22 +561,24 @@ public class FrmVenta extends javax.swing.JFrame {
 
     private void BtnAgregarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarProducto1ActionPerformed
         // TODO add your handling code here:
-         try{
-            Conexion con = new Conexion();
+        Conexion con = new Conexion();
+        
+        try{
             
             int Total1 = (Integer.parseInt(TfPrecio.getText()) * Integer.parseInt(TfCantidad.getText()));
             TfTotalProducto.setText(String.valueOf(Total1));
                  
             CallableStatement cst = Conexion.obtConexion().prepareCall("{CALL Ingresar_DetalleVenta (?,?,?,?)}");
             cst.setString(1,(TfVenta.getText()));
-            cst.setString(2, (TfProducto.getText()));
-            cst.setString(3, TfCantidad.getText());
-            cst.setString(4, TfDescuento.getText());
-            cst.executeQuery();
+            cst.setInt(2, Integer.parseInt(TfProducto.getText()));
+            cst.setInt(3, Integer.parseInt(TfCantidad.getText()));
+            cst.setInt(4, Integer.parseInt(TfDescuento.getText()));
+            cst.executeUpdate();
             boolean entra = false;
             
-            CargarTablaProductoAdquirido();
+             CargarTablaProductoAdquirido();
             JOptionPane.showMessageDialog(this, "Producto registrado correctamente");
+           
             
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, ex.toString());
@@ -613,7 +616,7 @@ public class FrmVenta extends javax.swing.JFrame {
             CallableStatement cst = Conexion.obtConexion().prepareCall("{CALL Mouse_ClickedProductoAdquirido (?)}");
             cst.setString(1,(TblProductosAdquiridos.getValueAt(fila, 0).toString()));
             
-            cst.executeQuery();
+          rs =  cst.executeQuery();
            
             while(rs.next()){
                 TfProducto.setText(rs.getString("Codigo_producto"));
